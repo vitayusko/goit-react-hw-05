@@ -13,7 +13,11 @@ const App = () => {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/movies" element={<MoviesPage />} />
-        <Route path="/movies/:movieId" element={<MovieDetailsPage />} />
+        <Route path="/movies/:movieId" element={<MovieDetailsPage />}>
+          <Route path="cast" element={<h1>CAST</h1>} />
+          <Route path="reviews" element={<h1>reviews</h1>} />
+        </Route>
+
         <Route path="/*" element={<NotFoundPage />} />
       </Routes>
     </div>
@@ -21,3 +25,6 @@ const App = () => {
 };
 
 export default App;
+
+// /movies/:movieId/cast – компонент MovieCast, інформація про акторський склад. Рендериться в нижній частині на сторінці MovieDetailsPage.
+// /movies/:movieId/reviews – компонент MovieReviews, інформація про огляди. Рендериться в нижній частині на сторінці MovieDetailsPage.

@@ -14,3 +14,15 @@ export const fetchMovies = async (query) => {
   );
   return response.data;
 };
+
+export const fetchMovieDetails = async (movieId) => {
+  const response = await axios.get(
+    `https://api.themoviedb.org/3/movie/${movieId}`,
+    {
+      params: {
+        api_key: API_KEY,
+      },
+    }
+  );
+  return response.data;
+};
