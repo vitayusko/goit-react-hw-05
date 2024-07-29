@@ -10,12 +10,8 @@ const MovieDetailsPage = () => {
 
   useEffect(() => {
     const getMovieDetails = async () => {
-      try {
-        const data = await fetchMovieDetails(movieId);
-        setMovie(data);
-      } catch (error) {
-        console.log("Error fetching movie details:", error);
-      }
+      const data = await fetchMovieDetails(movieId);
+      setMovie(data);
     };
 
     getMovieDetails();
@@ -43,7 +39,7 @@ const MovieDetailsPage = () => {
           <p>{movie.overview}</p>
           <h3>Genres</h3>
           <p>{movie.genres.map((genre) => genre.name).join(", ")}</p>
-        </div>{" "}
+        </div>
       </div>
       <hr />
 

@@ -5,6 +5,8 @@ import Navigation from "./Navigation/Navigation";
 import MoviesPage from "../pages/MoviesPage/MoviesPage";
 import NotFoundPage from "../pages/NotFoundPage/NotFoundPage";
 import MovieDetailsPage from "../pages/MovieDetailsPage/MovieDetailsPage";
+import MovieCast from "./MovieCast/MovieCast ";
+import MovieReviews from "./MovieReviews/MovieReviews";
 
 const App = () => {
   return (
@@ -14,10 +16,9 @@ const App = () => {
         <Route path="/" element={<HomePage />} />
         <Route path="/movies" element={<MoviesPage />} />
         <Route path="/movies/:movieId" element={<MovieDetailsPage />}>
-          <Route path="cast" element={<h1>CAST</h1>} />
-          <Route path="reviews" element={<h1>reviews</h1>} />
+          <Route path="cast" element={<MovieCast />} />
+          <Route path="reviews" element={<MovieReviews />} />
         </Route>
-
         <Route path="/*" element={<NotFoundPage />} />
       </Routes>
     </div>

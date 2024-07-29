@@ -26,3 +26,30 @@ export const fetchMovieDetails = async (movieId) => {
   );
   return response.data;
 };
+
+export const fetchMovieCast = async (movieId) => {
+  const response = await axios.get(
+    `https://api.themoviedb.org/3/movie/${movieId}/credits`,
+    {
+      params: {
+        api_key: API_KEY,
+        language: "en-US",
+      },
+    }
+  );
+  return response.data;
+};
+
+export const fetchMovieReviews = async (movieId) => {
+  const url = `https://api.themoviedb.org/3/movie/${movieId}/reviews`;
+
+  const response = await axios.get(url, {
+    params: {
+      api_key: API_KEY,
+      language: "en-US",
+      page: 1,
+    },
+  });
+
+  return response.data;
+};
