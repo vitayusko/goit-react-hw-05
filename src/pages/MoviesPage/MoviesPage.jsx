@@ -7,16 +7,14 @@ import { useSearchParams } from "react-router-dom";
 
 const MoviesPage = () => {
   const [movies, setMovies] = useState([]);
-  const [filterValue, setFilterValue] = useState("");
   const [error, setError] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
+  const filterValue = searchParams.get("query") || "";
 
   useEffect(() => {
-    const query = searchParams.get("query") || "Inception";
-
     const getData = async () => {
       try {
-        const data = await fetchMovieSearch(query);
+        const data = await fetchMovieSearch(filterValue);
         console.log(data);
         if (data && data.results) {
           setMovies(data.results);
@@ -28,10 +26,9 @@ const MoviesPage = () => {
     };
 
     getData();
-  }, [searchParams]);
+  }, [filterValue]);
 
   const handleChangeFilter = (newValue) => {
-    setFilterValue(newValue);
     searchParams.set("query", newValue);
     setSearchParams(searchParams);
   };

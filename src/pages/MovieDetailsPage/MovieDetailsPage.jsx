@@ -1,13 +1,20 @@
-import React, { useEffect, useState } from "react";
-import { NavLink, Outlet, useNavigate, useParams } from "react-router-dom";
+import React, { Suspense, useEffect, useRef, useState } from "react";
+import {
+  NavLink,
+  Outlet,
+  useNavigate,
+  useParams,
+  useLocation,
+  Link,
+} from "react-router-dom";
 import { fetchMovieDetails } from "../../services/api";
 import s from "./MovieDetailsPage.module.css";
 
 const MovieDetailsPage = () => {
   const { movieId } = useParams();
   const [movie, setMovie] = useState(null);
-  const navigate = useNavigate();
-
+  const location = useLocation();
+  const goBackRef = useRef(location?.state || "/movies");
   useEffect(() => {
     const getMovieDetails = async () => {
       const data = await fetchMovieDetails(movieId);
@@ -23,9 +30,12 @@ const MovieDetailsPage = () => {
 
   return (
     <div className={s.wrapper}>
-      <button className={s.btn} onClick={() => navigate(-1)}>
+      <Link to={goBackRef.current} className={s.btn}>
         Go Back
-      </button>
+      </Link>
+      {/* <button  onClick={() => navigate(-1)}>
+        Go Back
+      </button> */}
       <div className={s.wrapperInfo}>
         <img
           src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
@@ -63,7 +73,9 @@ const MovieDetailsPage = () => {
         </li>
       </ul>
       <hr />
-      <Outlet />
+      <Suspense fallback={<h1>Loading...</h1>}>
+        <Outlet />
+      </Suspense>
     </div>
   );
 };
