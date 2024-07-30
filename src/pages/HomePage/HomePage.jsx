@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import MovieList from "../../components/MovieList/MovieList";
 import { fetchMovies } from "../../services/api";
+import s from "./HomePage.module.css";
 
 const HomePage = () => {
   const [movies, setMovies] = useState([]);
@@ -21,7 +22,7 @@ const HomePage = () => {
   }, []);
 
   return (
-    <div>
+    <div className={s.wrapper}>
       <MovieList movies={movies} />
     </div>
   );
