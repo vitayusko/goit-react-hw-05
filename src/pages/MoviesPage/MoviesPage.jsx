@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import MovieList from "../../components/MovieList/MovieList";
 import { fetchMovieSearch } from "../../services/api";
 import s from "./MoviesPage.module.css";
@@ -9,41 +9,46 @@ const MoviesPage = () => {
   const [movies, setMovies] = useState([]);
   const [error, setError] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
-  const filterValue = searchParams.get("query") || "";
+  const [searchQuery, setSearchQuery] = useState(
+    searchParams.get("query") || ""
+  );
 
   useEffect(() => {
-    const getData = async () => {
-      try {
-        const data = await fetchMovieSearch(filterValue);
-        console.log(data);
-        if (data && data.results) {
-          setMovies(data.results);
+    if (searchQuery) {
+      const getData = async () => {
+        try {
+          const data = await fetchMovieSearch(searchQuery);
+          if (data && data.results) {
+            setMovies(data.results);
+          } else {
+            setMovies([]);
+          }
+        } catch (error) {
+          console.error("Error fetching movies:", error);
+          setError(error.message);
         }
-      } catch (error) {
-        console.error("Error fetching movies:", error);
-        setError(error.message);
-      }
-    };
+      };
+      getData();
+    }
+  }, [searchQuery]);
 
-    getData();
-  }, [filterValue]);
-
-  const handleChangeFilter = (newValue) => {
-    searchParams.set("query", newValue);
-    setSearchParams(searchParams);
+  const handleSearchSubmit = (newQuery) => {
+    setSearchParams({ query: newQuery });
+    setSearchQuery(newQuery); // Устанавливаем новый запрос
   };
 
-  const filteredData = movies.filter((item) =>
-    item.title.toLowerCase().includes(filterValue.toLowerCase())
-  );
+  const handleChangeFilter = (newValue) => {
+    setSearchQuery(newValue); // Обновляем локальное состояние поиска
+  };
 
   return (
     <div className={s.wrapper}>
       <SearchBar
+        filterValue={searchQuery}
         handleChangeFilter={handleChangeFilter}
-        filterValue={filterValue}
+        handleSearchSubmit={handleSearchSubmit}
       />
-      {error ? <div>Error: {error}</div> : <MovieList movies={filteredData} />}
+      {error ? <div>Error: {error}</div> : <MovieList movies={movies} />}
     </div>
   );
 };

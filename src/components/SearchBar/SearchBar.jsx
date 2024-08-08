@@ -1,15 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 
-const SearchBar = ({ filterValue, handleChangeFilter }) => {
+const SearchBar = ({ filterValue, handleChangeFilter, handleSearchSubmit }) => {
+  const [inputValue, setInputValue] = useState(filterValue);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    handleSearchSubmit(inputValue); // Выполняем поиск при сабмите формы
+  };
+
   return (
-    <div>
+    <form onSubmit={handleSubmit}>
       <input
-        value={filterValue}
-        onChange={(e) => handleChangeFilter(e.target.value)}
         type="search"
+        value={inputValue}
+        onChange={(e) => setInputValue(e.target.value)} // Обновляем локальное состояние ввода
         placeholder="Search movie....."
       />
-    </div>
+      <button type="submit">Search</button>
+    </form>
   );
 };
 

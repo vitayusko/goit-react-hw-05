@@ -1,7 +1,7 @@
 import React, { Suspense, lazy } from "react";
 import { Route, Routes } from "react-router-dom";
 // import HomePage from "../pages/HomePage/HomePage";
-// import Navigation from "./Navigation/Navigation";
+import Navigation from "./Navigation/Navigation";
 // import MoviesPage from "../pages/MoviesPage/MoviesPage";
 // import NotFoundPage from "../pages/NotFoundPage/NotFoundPage";
 // import MovieDetailsPage from "../pages/MovieDetailsPage/MovieDetailsPage";
@@ -9,7 +9,7 @@ import { Route, Routes } from "react-router-dom";
 // import MovieReviews from "./MovieReviews/MovieReviews";
 
 const HomePage = lazy(() => import("../pages/HomePage/HomePage"));
-const Navigation = lazy(() => import("./Navigation/Navigation"));
+// const Navigation = lazy(() => import("./Navigation/Navigation"));
 const MoviesPage = lazy(() => import("../pages/MoviesPage/MoviesPage"));
 const NotFoundPage = lazy(() => import("../pages/NotFoundPage/NotFoundPage"));
 const MovieDetailsPage = lazy(() =>
